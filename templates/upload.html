@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Compliance Document Screening</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1, h2 {
+        color: #333;
+      }
+
+      form {
+        margin-bottom: 30px;
+      }
+
+      .results {
+        margin-top: 20px;
+      }
+
+      mark {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Upload Your Document for Compliance Screening</h1>
+    
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" required>
+      <br><br>
+      <input type="submit" value="Upload and Screen">
+    </form>
+
+    <div class="results">
+      <h2>Results:</h2>
+      {% if flagged_terms %}
+        <p>Compliance issues found: {{ flagged_terms }}</p>
+      {% else %}
+        <p>No compliance issues found. Document looks clean.</p>
+      {% endif %}
+    </div>
+
+  </body>
+</html>

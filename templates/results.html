@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Compliance Document Screening Results</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1, h2 {
+        color: #333;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      table, th, td {
+        border: 1px solid black;
+      }
+
+      th, td {
+        padding: 10px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      mark {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Upload Your Document for Compliance Screening</h1>
+    
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" required>
+      <br><br>
+      <input type="submit" value="Upload and Screen">
+    </form>
+
+    <h2>Results:</h2>
+    {% if flagged_terms %}
+      <table>
+        <tr>
+          <th>Keyword</th>
+          <th>Page Number</th>
+          <th>Occurrences</th>
+        </tr>
+        {% for keyword, occurrences in flagged_terms.items() %}
+          {% for occurrence in occurrences %}
+          <tr>
+            <td>{{ keyword }}</td>
+            <td>{{ occurrence.page }}</td>
+            <td>{{ occurrence.count }}</td>
+          </tr>
+          {% endfor %}
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No compliance issues found. Document looks clean.</p>
+    {% endif %}
+
+    <h2>Highlighted Text:</h2>
+    <pre>{{ highlighted_text|safe }}</pre>
+  </body>
+</html>
